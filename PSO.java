@@ -14,4 +14,6 @@ public class PSO {
         this.neighborhood = neighborhood;
         this.numParticles = numParticles;
     }
+
+
 }
