@@ -1,34 +1,38 @@
 import java.lang.Math.*;
 
-
-
 public class Function {
 
+	private double minPosBound;
 
+	private double maxPosBound;
 
-	private double minBound;
+	private double minVelBound;
 
-	private double maxBound;
+	private double maxVelBound;
 
-
-
-	public Function(double minBound, double maxBound) {
+	public Function(double minPosBound, double maxPosBound, double maxVelBound, double minVelBound) {
 
 		this.minBound = minBound;
 		this.maxBound = maxBound;
-
-
+		this.minVelBound = minVelBound;
+		this.maxVelBound = maxVelBound;
 	}
 
 
-	public double getMinBound() {
-
-		return this.minBound;
+	public double getMinPosBound() {
+		return this.minPosBound;
 	}
 
-	public double getMaxBoud() {
+	public double getMaxPosBound() {
+		return this.maxPosBound;
+	}
 
-		return this.maxBound;
+	public double getMinVelBound() {
+		return this.minVelBound;
+	}
+
+	public double getMaxVelBound() {
+		return this.minVelBound;
 	}
 
     public double evalRosenbrock(Particle particle) {
