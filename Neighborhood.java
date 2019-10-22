@@ -10,7 +10,7 @@ public class Neighborhood {
 
     public Neighborhood(Swarm swarm)
     {
-        
+
         this.swarm = swarm;
     }
 
