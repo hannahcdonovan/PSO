@@ -1,5 +1,5 @@
-
 import java.lang.Math;
+import java.util.Random;
 
 public class Particle {
 
@@ -29,7 +29,6 @@ public class Particle {
 
     }
 
-
     public void generateRandomPosition() {
 
     	double minBound = this.func.getMinPosBound();
@@ -43,20 +42,27 @@ public class Particle {
     	}
     }
 
-
     public void generateRandomVelocity() {
 
-    	double minBound = this.func.getMinVelBound();
-    	double maxBound = this.func.getMaxVelBound();
+    	double negRange = this.func.getMinVelBound();
+        double posRange = this.func.getMaxVelBound();
 
-    	double range = maxBound - minBound;
+        Random rand = new Random();
 
     	for(int i = 0; i < this.dimensions; i++) {
-    		double random = (Math.random() * range) + mindBound;
+            double random = 0.0;
+            double negRand = (rand.nextDouble() * negRange);
+            double posRand = (rand.nextDouble() * posRange);
+            int chooser = rand.nextInt(2);
+            if (chooser == 0) {
+                random = negRand; 
+            }
+            else if (chooser == 1) {
+                random = posRand;
+            }
     		this.velocity[i] = random;
     	}
     }
-
 
     public double[] getPosition() {
     	return this.position;
@@ -65,4 +71,19 @@ public class Particle {
     public int getDimension() {
     	return this.dimensions;
     }
+
+    public String toString() {
+        String position = "";
+        String velocity = "";
+
+        for (int i = 0; i < this.dimensions; i++) {
+            position += this.position[i] + " ";
+            velocity += this.velocity[i] + " ";
+        }
+        
+        String answer = "The position vector is : " + position + "\nThe velocity vector is: " + velocity + 
+                        "\n--------------------------------------------------------------";
+        return answer;
+    }
+
 }

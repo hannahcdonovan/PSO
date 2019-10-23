@@ -12,8 +12,8 @@ public class Function {
 
 	public Function(double minPosBound, double maxPosBound, double maxVelBound, double minVelBound) {
 
-		this.minBound = minBound;
-		this.maxBound = maxBound;
+		this.minPosBound = minPosBound;
+		this.maxPosBound = maxPosBound;
 		this.minVelBound = minVelBound;
 		this.maxVelBound = maxVelBound;
 	}
@@ -32,68 +32,68 @@ public class Function {
 	}
 
 	public double getMaxVelBound() {
-		return this.minVelBound;
+		return this.maxVelBound;
 	}
 
-    public double evalRosenbrock(Particle particle) {
-        double[] position = particle.getPos();
-        double result = 0.0;
-        for(int i = 0; i < position.length - 1; i++ ) {
-            double partOfSum = 100*Math.pow((position[i+1] - Math.pow(position[i],2)),2) + Math.pow(position[i] - 1.0, 2);
-            result += partOfSum;
-        }
-        return result
-    }
+    // public double evalRosenbrock(Particle particle) {
+    //     double[] position = particle.getPos();
+    //     double result = 0.0;
+    //     for(int i = 0; i < position.length - 1; i++ ) {
+    //         double partOfSum = 100*Math.pow((position[i+1] - Math.pow(position[i],2)),2) + Math.pow(position[i] - 1.0, 2);
+    //         result += partOfSum;
+    //     }
+    //     return result;
+    // }
 
-    public double evalRastrigin(Particle particle) {
-        double[] position = particle.getPos();
-        int dim = particle.getDim();
-        double result = 10.0 * dim;
-        for(int i = 0; i < position.length; i++ ) {
-            double partOfSum = Math.pow(position[i], 2) - 10*Math.cos(2*Math.PI*position[i]);
-            result += partOfSum;
-        }
-        return result;
-    }
+    // public double evalRastrigin(Particle particle) {
+    //     double[] position = particle.getPos();
+    //     int dim = particle.getDim();
+    //     double result = 10.0 * dim;
+    //     for(int i = 0; i < position.length; i++ ) {
+    //         double partOfSum = Math.pow(position[i], 2) - 10*Math.cos(2*Math.PI*position[i]);
+    //         result += partOfSum;
+    //     }
+    //     return result;
+    // }
 
-    public double evalAckley(Particle particle) {
-        double[] params = particle.getPosition();
+    // public double evalAckley(Particle particle) {
+    //     double[] params = particle.getPosition();
 
-        int a = 20;
-        double b = 0.2;
-        double c = 2 * Math.PI;
-        int d = particle.getDimension();
-        double inverse = 1/d;
+    //     int a = 20;
+    //     double b = 0.2;
+    //     double c = 2 * Math.PI;
+    //     int d = particle.getDimension();
+    //     double inverse = 1/d;
 
-        double result = -a * Math.exp(-b * Math.sqrt(inverse * summingSquaresAckelyHelper(particle))) 
-                        - Math.exp(inverse * summingCosAckleyHelper(particle, c)) + a + Math.exp(1);
+    //     double result = -a * Math.exp(-b * Math.sqrt(inverse * summingSquaresAckelyHelper(particle))) 
+    //                     - Math.exp(inverse * summingCosAckleyHelper(particle, c)) + a + Math.exp(1);
         
-        return result;
+    //     return result;
 
-    }
+    // }
 
-    public double summingSquaresAckelyHelper(Particle particle) {
-        double[] params = particle.getPosition();
+    // public double summingSquaresAckelyHelper(Particle particle) {
+    //     double[] params = particle.getPosition();
 
-        double answer = 0;
+    //     double answer = 0;
 
-        for (int i = 0; i < particle.getDimension(); i++) {
-            answer += Math.pow(params[i], 2);
-        }
+    //     for (int i = 0; i < particle.getDimension(); i++) {
+    //         answer += Math.pow(params[i], 2);
+    //     }
         
-        return answer;
-    }
+    //     return answer;
+    // }
 
-    public double summingCosAckleyHelper(Partcile particle, double c) {
-        double[] params = particles.getPosition();
+    // public double summingCosAckleyHelper(Particle particle, double c) {
+    //     double[] params = particles.getPosition();
         
-        double answer = 0;
+    //     double answer = 0;
 
-        for (int i = 0; i < particles.getDimension(); i++) {
-            answer += Math.cos(c*params[i]);
-        }
+    //     for (int i = 0; i < particles.getDimension(); i++) {
+    //         answer += Math.cos(c*params[i]);
+    //     }
 
-        return answer;
-    }
+    //     return answer;
+    // }
 	    
 }
