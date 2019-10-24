@@ -25,9 +25,15 @@ public class Particle {
         this.velocity = new double[dimensions];
         this.personalBest = new double[dimensions];
         this.neighborhoodBest = new double[dimensions];
+        this.neighborhood = new Neighborhood(new ArrayList<Particle>());
         this.func = func;
 
     }
+
+    public void setNeighborhood(Neighborhood newNeighborhood) {
+        this.neighborhood = newNeighborhood;
+    }
+
 
     public void generateRandomPosition() {
 
@@ -41,6 +47,7 @@ public class Particle {
     		this.position[i] = random;
     	}
     }
+
 
     public void generateRandomVelocity() {
 
@@ -68,9 +75,11 @@ public class Particle {
     	return this.position;
     }
 
+
     public int getDimension() {
     	return this.dimensions;
     }
+    
 
     public String toString() {
         String position = "";

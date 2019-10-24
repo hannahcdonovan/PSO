@@ -3,15 +3,11 @@ import java.util.ArrayList;
 
 public class Neighborhood {
 
-    Swarm swarm;
-
     private List<Particle> neighbors;
 
-    public Neighborhood(Swarm swarm)
-    {
+    public Neighborhood(List<Particle> neighborList) {
 
-        this.swarm = swarm;
+        this.neighbors = neighborList;
     }
-
 
 }
