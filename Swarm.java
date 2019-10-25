@@ -1,6 +1,9 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Arrays;
 
 public class Swarm {
 
@@ -17,35 +20,96 @@ public class Swarm {
     public void makeRingNeighborhood() {
 
         if(numParticles > 2) {
-            Particle first = this.particleList.get(0);
-            Particle second = this.particleList.get(1);
-            Particle last = this.particleList.get(this.numParticles - 1);
-            Particle secondToLast = this.particleList.get(this.numParticles - 2);
+            for(int i = 0; i < this.numParticles; i++) {
 
-            List<Particle> firstList = new ArrayListList<Particle>();
-            firstList.add(second);
-            firstList.add(last);
-            Neighborhood firstNeighborhood = new Neighborhood(firstList);
-            first.setNeighborhood(firstNeighborhood);
+                int beforeIndex = (i - 1) % this.particleList.size();
+                int afterIndex = (i + 1) % this.particleList.size();
 
-            List<Particle> lastList = new ArrayList<Particle>();
-            lastList.add(first);
-            lastList.add(secondToLast);
-            Neighborhood lastNeighborhood = new Neighborhood(lastList);
-            last.setNeighborhood(lastNeighborhood);
+                if(beforeIndex == -1) {
+                    beforeIndex = this.particleList.size() - 1;
+                }
 
-            for(int i = 1; i < this.numParticles - 1; i++) {
-                Particle before = this.particleList.get(i - 1);
-                Particle after = this.particleList.get(i - 2);
+                Particle before = this.particleList.get(beforeIndex);
+                Particle after = this.particleList.get(afterIndex);
 
                 List<Particle> neighborhoodList = new ArrayList<Particle>();
                 neighborhoodList.add(before);
                 neighborhoodList.add(after);
+                neighborhoodList.add(this.particleList.get(i));
+
                 Neighborhood newNeighborhood = new Neighborhood(neighborhoodList);
                 this.particleList.get(i).setNeighborhood(newNeighborhood);
             }
+
         } else {
-            System.out.println("size smaller than two")
+            System.out.println("size smaller than two");
+        }
+    }
+
+
+    public void makeVonNeumannNeighborhood() {
+
+        int numRows = 0;
+        int numColumns = 0;
+
+        double sizeRoot = Math.sqrt(this.numParticles);
+        int roundedRoot = (int) Math.round(sizeRoot);
+
+        numRows = this.numParticles / roundedRoot;
+        numColumns = roundedRoot;
+
+        Particle[][] neumannArray = new Particle[numRows][numColumns];
+
+        int counter = 0;
+
+        for(int i = 0; i < numRows; i++) {
+            for(int j = 0; j < numColumns; j++) {
+                if(counter < this.numParticles) {
+                    neumannArray[i][j] = this.particleList.get(counter);
+                    counter++;
+                }
+            }
+        }
+
+        // for(int i = 0; i < numRows; i++) {
+        //     for(int j = 0; j < numColumns; j++) {
+        //         System.out.println("[" + i+ "][" + j + "]" + neumannArray[i][j]);
+        //     }
+        // }
+
+
+
+        for(int i = 0; i < numRows; i++) {
+            for(int j = 0; j < numColumns; j++) {
+                List<Particle> neighborhoodList = new ArrayList<Particle>();
+                int aboveIndex = (i - 1) % numRows;
+                int belowIndex = (i + 1) % numRows;
+                int leftIndex = (j - 1) % numColumns;
+                int rightIndex = (j + 1) % numColumns;
+
+                if(aboveIndex == -1) {
+                    aboveIndex = numRows - 1;
+                }
+                if(leftIndex == -1) {
+                    leftIndex = numColumns - 1;
+                }
+
+                Particle above = neumannArray[aboveIndex][j];
+                Particle below = neumannArray[belowIndex][j];
+                Particle left = neumannArray[i][leftIndex];
+                Particle right = neumannArray[i][rightIndex];
+
+                neighborhoodList.add(above);
+                neighborhoodList.add(below);
+                neighborhoodList.add(left);
+                neighborhoodList.add(right);
+                neighborhoodList.add(neumannArray[i][j]);
+
+                Neighborhood newNeighborhood = new Neighborhood(neighborhoodList);
+                System.out.println("Current one is " + neumannArray[i][j]);
+                System.out.println(neighborhoodList);
+                neumannArray[i][j].setNeighborhood(newNeighborhood);
+            }
         }
     }
 
@@ -65,15 +129,20 @@ public class Swarm {
 
         for(int i = 0; i < this.particleList.size(); i++) {
             List<Particle> neighborhoodList = new ArrayList<Particle>();
+            neighborhoodList.add(this.particleList.get(i));
             numSet.clear();
+
             for(int j = 0; j < k; j++) {
                 int randNum = rand.nextInt(this.particleList.size());
+
                 while(numSet.contains(randNum)){
-                    int randNum = rand.nextInt(this.particleList.size());
+                    randNum = rand.nextInt(this.particleList.size());
                 }
+
                 numSet.add(randNum);
                 neighborhoodList.add(this.particleList.get(randNum));
             }
+
             Neighborhood newNeighborhood = new Neighborhood(neighborhoodList);
             this.particleList.get(i).setNeighborhood(newNeighborhood);
         }
@@ -101,12 +170,22 @@ public class Swarm {
 
 
     public static void main(String[] args) {
-        Swarm swarm = new Swarm(10);
-        int dimensions = 5;
+        Swarm swarm = new Swarm(16);
+        int dimensions = 1;
         Function func = new Function(15.0, 30.0, 2.0, -2.0);
 
         swarm.initialize(dimensions, func);
 
-        System.out.println(swarm.toString());
+        //System.out.println(swarm.toString());
+
+        swarm.makeVonNeumannNeighborhood();
+
+
+
+
+
     }
+
+
+
 }

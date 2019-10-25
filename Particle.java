@@ -1,5 +1,7 @@
 import java.lang.Math;
 import java.util.Random;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Particle {
 
@@ -25,7 +27,8 @@ public class Particle {
         this.velocity = new double[dimensions];
         this.personalBest = new double[dimensions];
         this.neighborhoodBest = new double[dimensions];
-        this.neighborhood = new Neighborhood(new ArrayList<Particle>());
+        List<Particle> neighborhoodList = new ArrayList<Particle>();
+        this.neighborhood = new Neighborhood(neighborhoodList);
         this.func = func;
 
     }
@@ -79,7 +82,7 @@ public class Particle {
     public int getDimension() {
     	return this.dimensions;
     }
-    
+
 
     public String toString() {
         String position = "";
@@ -90,8 +93,8 @@ public class Particle {
             velocity += this.velocity[i] + " ";
         }
         
-        String answer = "The position vector is : " + position + "\nThe velocity vector is: " + velocity + 
-                        "\n--------------------------------------------------------------";
+        String answer = position;
+                        //"\n--------------------------------------------------------------";
         return answer;
     }
 
