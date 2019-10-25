@@ -7,7 +7,11 @@ public class Neighborhood {
 
     public Neighborhood(List<Particle> neighborList) {
 
-        this.neighbors = neighborList;
+        neighbors = neighborList;
+    }
+
+    public List<Particle> getNeighborhoodList() {
+        return neighbors;
     }
 
 }

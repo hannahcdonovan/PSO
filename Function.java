@@ -36,7 +36,7 @@ public class Function {
 	}
 
      public double evalRosenbrock(Particle particle) {
-         double[] position = particle.getPos();
+         double[] position = particle.getPosition();
          double result = 0.0;
          for(int i = 0; i < position.length - 1; i++ ) {
              double partOfSum = 100*Math.pow((position[i+1] - Math.pow(position[i],2)),2) + Math.pow(position[i] - 1.0, 2);
@@ -46,8 +46,8 @@ public class Function {
      }
 
      public double evalRastrigin(Particle particle) {
-         double[] position = particle.getPos();
-         int dim = particle.getDim();
+         double[] position = particle.getPosition();
+         int dim = particle.getDimension();
          double result = 10.0 * dim;
          for(int i = 0; i < position.length; i++ ) {
              double partOfSum = Math.pow(position[i], 2) - 10*Math.cos(2*Math.PI*position[i]);
@@ -85,13 +85,11 @@ public class Function {
      }
 
      public double summingCosAckleyHelper(Particle particle, double c) {
-         double[] params = particles.getPosition();
+         double[] params = particle.getPosition();
         
          double answer = 0;
 
-         double c = Math.PI * 2;
-
-         for (int i = 0; i < particles.getDimension(); i++) {
+         for (int i = 0; i < particle.getDimension(); i++) {
              answer += Math.cos(c * params[i]);
          }
 
