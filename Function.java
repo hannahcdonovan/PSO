@@ -35,65 +35,67 @@ public class Function {
 		return this.maxVelBound;
 	}
 
-    // public double evalRosenbrock(Particle particle) {
-    //     double[] position = particle.getPos();
-    //     double result = 0.0;
-    //     for(int i = 0; i < position.length - 1; i++ ) {
-    //         double partOfSum = 100*Math.pow((position[i+1] - Math.pow(position[i],2)),2) + Math.pow(position[i] - 1.0, 2);
-    //         result += partOfSum;
-    //     }
-    //     return result;
-    // }
+     public double evalRosenbrock(Particle particle) {
+         double[] position = particle.getPos();
+         double result = 0.0;
+         for(int i = 0; i < position.length - 1; i++ ) {
+             double partOfSum = 100*Math.pow((position[i+1] - Math.pow(position[i],2)),2) + Math.pow(position[i] - 1.0, 2);
+             result += partOfSum;
+         }
+         return result;
+     }
 
-    // public double evalRastrigin(Particle particle) {
-    //     double[] position = particle.getPos();
-    //     int dim = particle.getDim();
-    //     double result = 10.0 * dim;
-    //     for(int i = 0; i < position.length; i++ ) {
-    //         double partOfSum = Math.pow(position[i], 2) - 10*Math.cos(2*Math.PI*position[i]);
-    //         result += partOfSum;
-    //     }
-    //     return result;
-    // }
+     public double evalRastrigin(Particle particle) {
+         double[] position = particle.getPos();
+         int dim = particle.getDim();
+         double result = 10.0 * dim;
+         for(int i = 0; i < position.length; i++ ) {
+             double partOfSum = Math.pow(position[i], 2) - 10*Math.cos(2*Math.PI*position[i]);
+             result += partOfSum;
+         }
+         return result;
+     }
 
-    // public double evalAckley(Particle particle) {
-    //     double[] params = particle.getPosition();
+     public double evalAckley(Particle particle) {
+         double[] params = particle.getPosition();
 
-    //     int a = 20;
-    //     double b = 0.2;
-    //     double c = 2 * Math.PI;
-    //     int d = particle.getDimension();
-    //     double inverse = 1/d;
+         int a = 20;
+         double b = 0.2;
+         double c = 2 * Math.PI;
+         int d = particle.getDimension();
+         double inverse = 1/d;
 
-    //     double result = -a * Math.exp(-b * Math.sqrt(inverse * summingSquaresAckelyHelper(particle))) 
-    //                     - Math.exp(inverse * summingCosAckleyHelper(particle, c)) + a + Math.exp(1);
+         double result = -a * Math.exp(-b * Math.sqrt(inverse * summingSquaresAckleyHelper(particle))) 
+                         - Math.exp(inverse * summingCosAckleyHelper(particle, c)) + a + Math.exp(1);
         
-    //     return result;
+         return result;
 
-    // }
+     }
 
-    // public double summingSquaresAckelyHelper(Particle particle) {
-    //     double[] params = particle.getPosition();
+     public double summingSquaresAckleyHelper(Particle particle) {
+         double[] params = particle.getPosition();
 
-    //     double answer = 0;
+         double answer = 0;
 
-    //     for (int i = 0; i < particle.getDimension(); i++) {
-    //         answer += Math.pow(params[i], 2);
-    //     }
+         for (int i = 0; i < particle.getDimension(); i++) {
+             answer += Math.pow(params[i], 2);
+         }
         
-    //     return answer;
-    // }
+         return answer;
+     }
 
-    // public double summingCosAckleyHelper(Particle particle, double c) {
-    //     double[] params = particles.getPosition();
+     public double summingCosAckleyHelper(Particle particle, double c) {
+         double[] params = particles.getPosition();
         
-    //     double answer = 0;
+         double answer = 0;
 
-    //     for (int i = 0; i < particles.getDimension(); i++) {
-    //         answer += Math.cos(c*params[i]);
-    //     }
+         double c = Math.PI * 2;
 
-    //     return answer;
-    // }
+         for (int i = 0; i < particles.getDimension(); i++) {
+             answer += Math.cos(c * params[i]);
+         }
+
+         return answer;
+     }
 	    
 }
