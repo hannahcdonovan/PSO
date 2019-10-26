@@ -15,5 +15,4 @@ public class PSO {
         this.numParticles = numParticles;
     }
 
-
 }
