@@ -23,10 +23,10 @@ public class Neighborhood {
 
         Particle currBest = neighbors.get(0);
         Function func = neighbors.get(0).getFunc();
-        System.out.println("(1) Curr best is: " + currBest);
+        System.out.println("(1) Curr best is: " + func.evaluate(currBest));
         for (int i = 1; i < neighbors.size(); i++) {
             Particle comparison = neighbors.get(i);
-            System.out.println("Comparison is: " + comparison);
+            System.out.println("Comparison is: " + func.evaluate(comparison));
             if (func.evaluate(comparison) < func.evaluate(currBest)) {
                 currBest = comparison;
             }
@@ -39,6 +39,15 @@ public class Neighborhood {
     public Particle getNeighborhoodBest() {
         return this.nbest;
     }
+    
+    // public String printNeighborhoodBestVal() {
+    //     String neighborhoodBest = "";
+    //     for (int i = 0; i < neighbors.size(); i++) {
+    //         Function func = neighbors.get(i).getFunc();
+    //         neighborhoodBest += func.evaluate(this.nbest);
+    //     }
+    //     return neighborhoodBest;
+    // }
 
     public static void main(String[] args) {
         Swarm swarm = new Swarm(16);

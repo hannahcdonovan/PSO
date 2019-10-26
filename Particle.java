@@ -5,13 +5,17 @@ import java.util.ArrayList;
 
 public class Particle {
 
+    Random gen = new Random()
+
     private int dimensions;
 
     private double[] position;
 
     private double[] velocity;
 
-    private double[] personalBest;
+    private double[] personalBestPos;
+
+    private double personalBestScore;
 
     private Neighborhood neighborhood;
 
@@ -89,6 +93,30 @@ public class Particle {
         }
     }
 
+    public void generateNewPosition(double constriction, double phi1, double phi2) {
+
+        double[] newPos = new double[this.dimensions];
+
+        for(i = 0; i < this.dimensions; i++) {
+            double part1 = constriction * (this.velocity[i] + gen.nextDouble()*phi1);
+            double part2 = (this.personalBestPos[i] - this.position[i]) + (gen.nextDouble()*phi2);
+            double part3 = (this.neighborhood.getNeighborhoodBest().personalBestPos()[i] - this.position[i]);
+
+            newPos[i] = part1*part2*part3;
+        }
+
+
+
+
+
+    }
+
+    public setPersonalBestPos(double[] somePosition) {
+
+        double[] copy = somePosition;
+        this.personalBestPos = copy;
+    }
+
     public double[] getPosition() {
         return this.position;
     }
@@ -109,8 +137,12 @@ public class Particle {
         return this.neighborhood;
     }
 
-    public double[] personalBest() {
-        return this.personalBest;
+    public double[] personalBestPos() {
+        return this.personalBestPos;
+    }
+
+    public double personalBestScore() {
+        return this.personalBestScore;
     }
 
 

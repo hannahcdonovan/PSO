@@ -108,7 +108,7 @@ public class Swarm {
                 neighborhoodList.add(neumannArray[i][j]);
 
                 Neighborhood newNeighborhood = new Neighborhood(neighborhoodList);
-                System.out.println("Current one is " + neumannArray[i][j]);
+                // System.out.println("Current one is " + neumannArray[i][j]);
                 System.out.println(neighborhoodList);
                 neumannArray[i][j].setNeighborhood(newNeighborhood);
                 neighborhoods.add(newNeighborhood);
@@ -190,6 +190,12 @@ public class Swarm {
         // System.out.println(swarm.toString());
 
         swarm.makeVonNeumannNeighborhood();
+
+        swarm.updateNeighborhoodBestList();
+
+        for (Neighborhood n : swarm.getNeighborhoods()) {
+            System.out.println(n.printNeighborhoodBestVal());
+        }
 
     }
 
