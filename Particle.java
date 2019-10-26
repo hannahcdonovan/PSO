@@ -13,8 +13,6 @@ public class Particle {
 
     private double[] personalBest;
 
-    private double[] neighborhoodBest;
-
     private Neighborhood neighborhood;
 
     private Function func;
@@ -25,12 +23,32 @@ public class Particle {
         this.position = new double[dimensions];
         this.velocity = new double[dimensions];
         this.personalBest = new double[dimensions];
-        this.neighborhoodBest = new double[dimensions];
         List<Particle> neighborhoodList = new ArrayList<Particle>();
         this.neighborhood = new Neighborhood(neighborhoodList);
         this.func = func;
 
     }
+
+    public Particle(int dimensions, Function func, double[] position, double[] velocity, double[] personalBest,
+                     Neighborhood neighborhood) {
+
+        this.dimensions = dimensions;
+        this.position = position;
+        this.velocity = velocity;
+        this.personalBest = personalBest;
+        this.neighborhood = neighborhood;
+        this.func = func;
+
+    }
+
+    public Particle copyParticle() {
+
+        Particle newParticle = new Particle(this.dimensions, this.func, this.position, this.velocity, this.personalBest, 
+                                             this.neighborhood);
+        return newParticle;
+    }
+
+
 
     public void setNeighborhood(Neighborhood newNeighborhood) {
         this.neighborhood = newNeighborhood;
@@ -81,6 +99,20 @@ public class Particle {
     public Function getFunc() {
         return this.func;
     }
+
+    public double[] getVelocity() {
+        return this.velocity;
+    }
+
+    public Neighborhood getNeighborhood() {
+        return this.neighborhood;
+    }
+
+    public double[] personalBest() {
+        return this.personalBest;
+    }
+
+
 
     public String toString() {
         String position = "";

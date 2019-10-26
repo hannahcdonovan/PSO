@@ -8,7 +8,9 @@ public class Neighborhood {
     private Particle nbest;
 
     public Neighborhood(List<Particle> neighborList) {
-        neighbors = neighborList;
+        this.neighbors = neighborList;
+        Function dummyFunc = new Function("dummy", 0.0, 0.0, 0.0, 0.0);
+        this.nbest = new Particle(0, dummyFunc);
     }
 
     public List<Particle> getNeighborhoodList() {
@@ -16,10 +18,11 @@ public class Neighborhood {
     }
 
     public void setNeighborhoodBest(Particle currBest) {
-        nbest = currBest;
+        nbest = currBest.copyParticle();
     }
 
     public void updateBest() {
+
         Particle currBest = neighbors.get(0);
         Function func = neighbors.get(0).getFunc();
         System.out.println("(1) Curr best is: " + currBest);
@@ -30,11 +33,13 @@ public class Neighborhood {
                 currBest = comparison;
             }
         }
-        this.setNeighborhoodBest(currBest);
+        if(func.evaluate(currBest) < func.evaluate(this.nbest)) {
+        	this.setNeighborhoodBest(currBest);
+        }
     }
 
     public Particle getNeighborhoodBest() {
-        return nbest;
+        return this.nbest;
     }
 
     public static void main(String[] args) {
