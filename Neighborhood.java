@@ -9,8 +9,6 @@ public class Neighborhood {
 
     public Neighborhood(List<Particle> neighborList) {
         this.neighbors = neighborList;
-        Function dummyFunc = new Function("dummy", 0.0, 0.0, 0.0, 0.0);
-        this.nbest = new Particle(0, dummyFunc);
     }
 
     public List<Particle> getNeighborhoodList() {

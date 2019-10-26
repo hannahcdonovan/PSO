@@ -52,6 +52,7 @@ public class Particle {
 
     public void setNeighborhood(Neighborhood newNeighborhood) {
         this.neighborhood = newNeighborhood;
+        this.neighborhood.setNeighborhoodBest(newNeighborhood.getNeighborhoodList().get(0));
     }
 
     public void generateRandomPosition() {
