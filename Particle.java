@@ -185,17 +185,16 @@ public class Particle {
         String position = "";
         String velocity = "";
 
-        // for (int i = 0; i < this.dimensions; i++) {
-        //     position += this.position[i] + " ";
-        //     velocity += this.velocity[i] + " ";
-        // }
+        for (int i = 0; i < this.dimensions; i++) {
+            position += this.position[i] + " ";
+        }
 
         String score = Double.toString(this.func.evaluate(this));
 
 
         //String answer = position;
         // "\n--------------------------------------------------------------";
-        return score;
+        return position + " ->" +score;
     }
 
 }

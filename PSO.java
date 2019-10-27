@@ -34,8 +34,8 @@ public class PSO {
 
 
 
-        if(funcName.equals("rock")) {
-            this.function = new Function("rock", 15.0, 30.0, 2.0, -2.0);
+        if(funcName.equals("rok")) {
+            this.function = new Function("rok", 15.0, 30.0, 2.0, -2.0);
 
         } else if(funcName.equals("ack")) {
             this.function = new Function("ack", 16.0, 32.0, 4.0, -2.0);
@@ -50,7 +50,7 @@ public class PSO {
 
         Swarm newSwarm = new Swarm(numParticles);
         newSwarm.initialize(this.dimensions, this.function);
-        System.out.println(newSwarm);
+        //System.out.println(newSwarm);
 
 
         if(neighborhoodType.equals("gl")){
@@ -95,7 +95,11 @@ public class PSO {
             System.out.println( i + " BEST IN THIS ITERATION IS: " + bestBest);
 
             for(Particle p: this.swarm.getParticles()) {
+                System.out.println(p.getPosition()[0]);
+
                 p.generateNewPositionAndVelocity(CONSTRICTION_CONSTANT, PHI_ONE, PHI_TWO );
+                System.out.println(p.getPosition()[0]);
+
             }
 
             System.out.println("__________________________________");
@@ -105,7 +109,7 @@ public class PSO {
 
     public static void main(String[] args) {
 
-        PSO pso = new PSO(3, "ras", 25, 25, "ri");
+        PSO pso = new PSO(30, "rok", 30, 100, "ri");
         pso.optimize();
     }
 }
