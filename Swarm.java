@@ -9,12 +9,30 @@ import java.util.List;
 
 public class Swarm {
 
+
+    /*
+     * List containing all of the Particles in the Swarm
+     */
     private List<Particle> particleList;
 
-    private int numParticles;
 
+    /*
+     * The number of particles in the Swarm
+     */
+    private int numParticles; 
+
+
+    /*
+     * List containing all of the Neighborhoods that comprise the Swarm
+     */
     private List<Neighborhood> neighborhoods;
 
+
+    /*  
+     *   Constructor which creates a Swarm with numParticles number of particles. 
+     *
+     *   @param numParticles - the number of Particles in the Swarm
+     */
     public Swarm(int numParticles) {
         this.numParticles = numParticles;
         particleList = new ArrayList<Particle>();
@@ -22,6 +40,12 @@ public class Swarm {
     }
 
 
+    /*
+     * Creates neighborhoods that conform to a ring topology. This means that the particles 
+     * are imagined to be in a ring and each particle's neighborhood is comprised of the 
+     * particle to its left, the particle to its right, and itself. This method will create a 
+     * neighborhood for each particle in the Swarm and add it to neighborhoods
+     */    
     public void makeRingNeighborhood() {
 
         if (numParticles > 2) {
@@ -52,6 +76,16 @@ public class Swarm {
         }
     }
 
+
+    /*
+     * Creates neighborhoods for the Swarm which conform to the Von Neumann topology. This means that
+     * the particles can be imagined as arranged in a grid. Each particle's neighborhood is comprised
+     * of the particle to its left, the particle to its right, the particle above it, the particle below
+     * it, and itself. This grid is imagined as wrapped around, where the particle "above" a particle in the 
+     * top row is the particle in the same column in the bottom row. Similarly, the particle to the "right" of 
+     * a particle in the rightmost column is the particle on the leftmost column of this same row. A
+     * neighborhood is created for each particle and added to neighborhoods. 
+     */
     public void makeVonNeumannNeighborhood() {
 
         int numRows = 0;
@@ -76,11 +110,6 @@ public class Swarm {
             }
         }
 
-        // for(int i = 0; i < numRows; i++) {
-        // for(int j = 0; j < numColumns; j++) {
-        // System.out.println("[" + i+ "][" + j + "]" + neumannArray[i][j]);
-        // }
-        // }
 
         for (int i = 0; i < numRows; i++) {
             for (int j = 0; j < numColumns; j++) {
@@ -109,14 +138,18 @@ public class Swarm {
                 neighborhoodList.add(neumannArray[i][j]);
 
                 Neighborhood newNeighborhood = new Neighborhood(neighborhoodList);
-                // System.out.println("Current one is " + neumannArray[i][j]);
-                //System.out.println(neighborhoodList);
                 neumannArray[i][j].setNeighborhood(newNeighborhood);
                 neighborhoods.add(newNeighborhood);
             }
         }
     }
 
+
+    /*
+     * Creates a Neighborhood for each Particle according to global topology. This means that each
+     * particle's neighborhood is every Particle in the Swarm, including itself Therefore, each 
+     * Particle has the same Neighborhood. 
+     */
     public void makeGlobalNeighborhood() {
 
         Neighborhood globalNeighborhood = new Neighborhood(this.particleList);
@@ -127,6 +160,13 @@ public class Swarm {
         neighborhoods.add(globalNeighborhood);
     }
 
+
+    /*
+     * This creates a Neighborhood for each Particle in the Swarm according to a random topology. This 
+     * means that each Particle has a Neighborhood comprised of k random other unique Particles in the 
+     * Swarm. A Neighborhood is created for each Particle and added to neighborhoods
+     * 
+     */
     public void makeRandomNeighborhood(int k) {
         Random rand = new Random();
         Set<Integer> numSet = new HashSet<Integer>();
@@ -153,6 +193,15 @@ public class Swarm {
         }
     }
 
+
+    /*
+     * This method populates the Swarm with particles with random positions and velocities that
+     * are within the suggested bounds for the specific function. Each Particle that is made is 
+     * added to particleList. This method makes numParticles Particles. 
+     * 
+     * @param dimensions - integer repreresenting the dimension of each Particle
+     * @param func - Function that is the instance of the particular function used to evaluate each Particle
+     */
     public void initialize(int dimensions, Function func) {
         Particle randParticle;
         for (int i = 0; i < this.numParticles; i++) {
@@ -163,20 +212,34 @@ public class Swarm {
         }
     }
 
+
+    /*
+     * This returns the List of Neighborhoods that comprise the Swarm
+     */
     public List<Neighborhood> getNeighborhoods() {
         return this.neighborhoods;
     }
 
+
+    /*
+     * This return the List of Particles that comprise the Swarm
+     */
     public List<Particle> getParticles() {
         return this.particleList;
     }
 
+    /*
+     * This updates the best of each Neighborhood in neighborhoods
+     */
     public void updateNeighborhoodBestList() {
         for (int i = 0; i < neighborhoods.size(); i++) {
             neighborhoods.get(i).updateBest();
         }
     }
 
+    /*
+     * Prints the String representation of each Particle in the Swarm
+     */
     public String toString() {
         String swarm = "";
         for (int i = 0; i < particleList.size(); i++) {
@@ -184,24 +247,4 @@ public class Swarm {
         }
         return swarm;
     }
-
-    public static void main(String[] args) {
-        Swarm swarm = new Swarm(16);
-        int dimensions = 1;
-        Function func = new Function("Ackley", 15.0, 30.0, 2.0, -2.0);
-
-        swarm.initialize(dimensions, func);
-
-        // System.out.println(swarm.toString());
-
-        swarm.makeVonNeumannNeighborhood();
-
-        swarm.updateNeighborhoodBestList();
-
-        for (Neighborhood n : swarm.getNeighborhoods()) {
-            //System.out.println(n.printNeighborhoodBestVal());
-        }
-
-    }
-
 }
