@@ -8,6 +8,12 @@ public class PSO {
 
     int numParticles;
 
+
+    //swarm
+    //function
+    //dimensions
+    //num particles
+    
     public PSO(int dimension, Function function, Neighborhood neighborhood, int numParticles) {
         this.dimension = dimension;
         this.function = function;

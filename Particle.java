@@ -104,18 +104,18 @@ public class Particle {
 
             newPos[i] = part1*part2*part3;
         }
-
-
-
-
-
     }
 
-    public setPersonalBestPos(double[] somePosition) {
 
-        double[] copy = somePosition;
-        this.personalBestPos = copy;
+    public void updatePersonalBest() {
+
+        double currentScore = this.func.evaluate(this);
+        if(currentScore < this.personalBestScore) {
+            this.personalBestScore = currentScore;
+            this.personalBestPos = this.position.clone();
+        }
     }
+    
 
     public double[] getPosition() {
         return this.position;
@@ -144,7 +144,6 @@ public class Particle {
     public double personalBestScore() {
         return this.personalBestScore;
     }
-
 
 
     public String toString() {
