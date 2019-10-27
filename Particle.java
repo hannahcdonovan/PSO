@@ -108,11 +108,10 @@ public class Particle {
         double[] newVelo = new double[this.dimensions];
 
         for(int i = 0; i < this.dimensions; i++) {
-            double part1 = constriction * (this.velocity[i] + gen.nextDouble()*phi1);
-            double part2 = (this.personalBestPos[i] - this.position[i]) + (gen.nextDouble()*phi2);
-            double part3 = (this.neighborhood.getNeighborhoodBest().personalBestPos()[i] - this.position[i]);
+            double partial = this.velocity[i] + (gen.nextDouble()* phi1 * (this.personalBestPos[i] - this.position[i])) + 
+                ((gen.nextDouble()*phi2) * (this.neighborhood.getNeighborhoodBest().personalBestPos()[i] - this.position[i]))
 
-            newVelo[i] = part1*part2*part3;
+            newVelo[i] = constriction*partial;
         }
         
         this.velocity = newVelo;
@@ -185,16 +184,17 @@ public class Particle {
         String position = "";
         String velocity = "";
 
-        for (int i = 0; i < this.dimensions; i++) {
-            position += this.position[i] + " ";
-        }
+        // for (int i = 0; i < this.dimensions; i++) {
+        //     position += this.position[i] + " ";
+        //     velocity += this.velocity[i] + " ";
+        // }
 
         String score = Double.toString(this.func.evaluate(this));
 
 
         //String answer = position;
         // "\n--------------------------------------------------------------";
-        return position + " ->" +score;
+        return score;
     }
 
 }
