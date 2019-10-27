@@ -35,16 +35,16 @@ public class PSO {
 
 
         if(funcName.equals("rock")) {
-            this.function = new Function("Rosenbrock", 15.0, 30.0, 2.0, -2.0);
+            this.function = new Function("rock", 15.0, 30.0, 2.0, -2.0);
 
         } else if(funcName.equals("ack")) {
-            this.function = new Function("Ackley", 16.0, 32.0, 4.0, -2.0);
+            this.function = new Function("ack", 16.0, 32.0, 4.0, -2.0);
 
         } else if(funcName.equals("ras")) {
-            this.function = new Function("Rastrigin", 2.56, 5.12, 4.0, -2.0);
+            this.function = new Function("ras", 2.56, 5.12, 4.0, -2.0);
 
         } else {
-            this.function = new Function("Rosenbrock", 15.0, 30.0, 2.0, -2.0);
+            this.function = new Function("rock", 15.0, 30.0, 2.0, -2.0);
             System.out.println("made rosenbrock by default, something went wrong with funcName");
         }
 
