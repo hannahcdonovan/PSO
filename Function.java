@@ -105,11 +105,11 @@ public class Function {
         String function = this.funcName;
         double result = 0;
 
-        if (function.equals("Rosenbrock")) {
+        if (function.equals("rok")) {
             result = this.evalRosenbrock(particle);
-        } else if (function.equals("Ackley")) {
+        } else if (function.equals("ack")) {
             result = this.evalAckley(particle);
-        } else if (function.equals("Rastrigin")) {
+        } else if (function.equals("ras")) {
             result = this.evalRastrigin(particle);
         } else {
             System.out.println("Oops! Something went wrong!");
