@@ -155,7 +155,7 @@ public class PSO {
                 bestScore = iterBestScore;
             }
 
-            System.out.println( (i + 1) + " BEST at this point is: " + bestScore);
+            //System.out.println( (i + 1) + " BEST at this point is: " + bestScore);
 
 
             if((i + 1) % 1000 == 0) {

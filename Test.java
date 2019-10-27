@@ -1,3 +1,7 @@
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class Test {
     /**
      * The different type of neighborhoods.
@@ -459,11 +463,36 @@ public class Test {
         System.out.println("_____________________");
         System.out.println("Function: Rastrigin" + "\nTopology: Random" + "\nSwarm Size: 49");
         System.out.println("_____________________");
+
+        List<List<Double>> incrementLists36 = new ArrayList<List<Double>>();
+        for(int i = 0; i < 10; i++) {
+            List<Double> newList = new ArrayList<Double>();
+            incrementLists36.add(newList);
+        }
         PSO case36 = new PSO(dimensions, funcs[2], swarmSizes[2], iterations, neigborhoods[3]);
         for (int i = 0; i < experimentRuns; i++) {
             System.out.println("Experiment: " + i + 1);
             System.out.println("____________________");
-            case36.optimize();
+            List<Double> testResults = case36.optimize();
+            for(int j = 0; j < 10; j++) {
+                double val = testResults.get(i);
+                incrementLists36.get(i).add(val);
+            }
         }
+        double[] medianArr36 = getMedians(incrementLists36);
+    }
+
+
+    public static double[] getMedians(List<List<Double>> incrementLists) {
+        double[] medianArr = new double[10];
+        for(int i = 0; i < 10; i++) {
+            Collections.sort(incrementLists.get(i));
+            double fourthVal = incrementLists.get(i).get(4);
+            double fifthVal = incrementLists.get(i).get(5);
+            double average = (fourthVal + fifthVal) / 2.0;
+            medianArr[i] = average;
+            System.out.println((i + 1) + " thousand median: " + average);
+        }
+        return medianArr;
     }
 }
