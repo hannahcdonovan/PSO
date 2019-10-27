@@ -3,24 +3,39 @@ import java.util.ArrayList;
 
 public class Neighborhood {
 
+    /**
+     * A list of particles representing a neighborhood.
+     */
     private List<Particle> neighbors;
 
+    /**
+     * Value representing the neighborhood best.
+     */
     private Particle nbest;
 
+    /**
+     * Constructor for the Neighborhood object. Essentially a wrapper for a list of Particles that
+     * represent a neighborhood.
+     * @param neighborList List used to instantiate Neighborhood object.
+     */
     public Neighborhood(List<Particle> neighborList) {
         this.neighbors = neighborList;
     }
 
-    public List<Particle> getNeighborhoodList() {
-        return neighbors;
-    }
-
-    public void setNeighborhoodBest(Particle currBest) {
-        this.nbest = currBest.copyParticle();
+    /**
+     * Sets the neighborhood best to a copy of the particle's (because the particle is changing over time)
+     * position and calling evaluate on particle because .evaluate sets the current score of the particle. 
+     * @param currBest A particle representing the iteration's new best.
+     */
+    public void setNeighborhoodBest(Particle newBest) {
+        this.nbest = newBest.copyParticle();
         this.nbest.getFunc().evaluate(nbest);
 
     }
 
+    /**
+     * Updates the neighborhood best for each particle's neighborhood on each iteration. 
+     */
     public void updateBest() {
 
         Particle currBest = neighbors.get(0).copyParticle();
@@ -43,36 +58,12 @@ public class Neighborhood {
         }
     }
 
+    /**
+     * Getter that returns the nbest for a given Neighborhood object.
+     * @return Particle, which is the best particle in the neighborhood.
+     */
     public Particle getNeighborhoodBest() {
         return this.nbest;
-    }
-    
-    // public String printNeighborhoodBestVal() {
-    //     String neighborhoodBest = "";
-    //     for (int i = 0; i < neighbors.size(); i++) {
-    //         Function func = neighbors.get(i).getFunc();
-    //         neighborhoodBest += func.evaluate(this.nbest);
-    //     }
-    //     return neighborhoodBest;
-    // }
-
-    public static void main(String[] args) {
-        Swarm swarm = new Swarm(16);
-        int dimensions = 1;
-        Function func = new Function("Ackley", 15.0, 30.0, 2.0, -2.0);
-
-        swarm.initialize(dimensions, func);
-
-        // System.out.println(swarm.toString());
-
-        swarm.makeVonNeumannNeighborhood();
-
-        System.out.println(swarm.getNeighborhoods());
-        swarm.updateNeighborhoodBestList();
-
-        for (int i = 0; i < swarm.getNeighborhoods().size(); i++) {
-            System.out.println("Neighborhood best is: " + swarm.getNeighborhoods().get(i).getNeighborhoodBest());
-        }
     }
 
 }
