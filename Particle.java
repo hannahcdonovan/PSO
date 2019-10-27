@@ -109,7 +109,7 @@ public class Particle {
 
         for(int i = 0; i < this.dimensions; i++) {
             double partial = this.velocity[i] + (gen.nextDouble()* phi1 * (this.personalBestPos[i] - this.position[i])) + 
-                ((gen.nextDouble()*phi2) * (this.neighborhood.getNeighborhoodBest().personalBestPos()[i] - this.position[i]))
+                ((gen.nextDouble()*phi2) * (this.neighborhood.getNeighborhoodBest().personalBestPos()[i] - this.position[i]));
 
             newVelo[i] = constriction*partial;
         }

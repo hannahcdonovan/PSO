@@ -68,7 +68,7 @@ public class Function {
         double b = 0.2;
         double c = 2 * Math.PI;
         int d = particle.getDimension();
-        double inverse = 1 / d;
+        double inverse = 1.0 / d;
 
         double result = -a * Math.exp(-b * Math.sqrt(inverse * summingSquaresAckleyHelper(particle)))
                 - Math.exp(inverse * summingCosAckleyHelper(particle, c)) + a + Math.exp(1);

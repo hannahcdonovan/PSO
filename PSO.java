@@ -14,7 +14,7 @@ public class PSO {
 
     String funcName;
 
-    final int NEIGHBORHOOD_SIZE = 6;
+    final int NEIGHBORHOOD_SIZE = 5;
 
     final double CONSTRICTION_CONSTANT = 0.7298;
 
@@ -95,10 +95,10 @@ public class PSO {
             System.out.println( i + " BEST IN THIS ITERATION IS: " + bestBest);
 
             for(Particle p: this.swarm.getParticles()) {
-                System.out.println(p.getPosition()[0]);
+                //System.out.println(p.getPosition()[0]);
 
                 p.generateNewPositionAndVelocity(CONSTRICTION_CONSTANT, PHI_ONE, PHI_TWO );
-                System.out.println(p.getPosition()[0]);
+                //System.out.println(p.getPosition()[0]);
 
             }
 
@@ -109,7 +109,7 @@ public class PSO {
 
     public static void main(String[] args) {
 
-        PSO pso = new PSO(30, "rok", 30, 100, "ri");
+        PSO pso = new PSO(30, "ack", 30, 1000, "vn");
         pso.optimize();
     }
 }
