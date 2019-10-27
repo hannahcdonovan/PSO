@@ -50,6 +50,8 @@ public class PSO {
 
         Swarm newSwarm = new Swarm(numParticles);
         newSwarm.initialize(this.dimensions, this.function);
+        System.out.println(newSwarm);
+
 
         if(neighborhoodType.equals("gl")){
             newSwarm.makeGlobalNeighborhood();
@@ -81,10 +83,16 @@ public class PSO {
 
             System.out.println("_________________________________");
 
+
+            double bestBest = Double.POSITIVE_INFINITY;
             for(Neighborhood n: this.swarm.getNeighborhoods()) {
                 n.updateBest();
-                System.out.println(n.getNeighborhoodBest());
+                double nBest = n.getNeighborhoodBest().getCurrentScore();
+                if(nBest < bestBest) {
+                    bestBest = nBest;
+                }
             }
+            System.out.println( i + " BEST IN THIS ITERATION IS: " + bestBest);
 
             for(Particle p: this.swarm.getParticles()) {
                 p.generateNewPositionAndVelocity(CONSTRICTION_CONSTANT, PHI_ONE, PHI_TWO );
@@ -97,7 +105,7 @@ public class PSO {
 
     public static void main(String[] args) {
 
-        PSO pso = new PSO(3, "rock", 10, 10, "gl");
+        PSO pso = new PSO(3, "ras", 25, 25, "ri");
         pso.optimize();
     }
 }

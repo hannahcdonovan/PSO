@@ -75,6 +75,11 @@ public class Particle {
             double random = (Math.random() * range) + minBound;
             this.position[i] = random;
         }
+
+        this.personalBestPos = this.position.clone();
+
+        double score = this.func.evaluate(this);
+        this.personalBestScore = score;
     }
 
     public void generateRandomVelocity() {
@@ -120,6 +125,12 @@ public class Particle {
         double[] newPos = new double[this.velocity.length];
         Arrays.setAll(newPos, i -> this.velocity[i] + this.position[i]);
         this.position = newPos;
+
+        double score = this.func.evaluate(this);
+        if(score < this.personalBestScore) {
+            this.personalBestPos = this.position.clone();
+            this.personalBestScore = score;
+        }
     }
 
 
@@ -163,6 +174,10 @@ public class Particle {
 
     public void setCurrentScore(double score) {
         this.currentScore = score;
+    }
+
+    public double getCurrentScore() {
+        return this.currentScore;
     }
 
 

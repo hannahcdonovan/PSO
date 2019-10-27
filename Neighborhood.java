@@ -23,15 +23,19 @@ public class Neighborhood {
 
     public void updateBest() {
 
-        Particle currBest = neighbors.get(0);
+        Particle currBest = neighbors.get(0).copyParticle();
         Function func = neighbors.get(0).getFunc();
-        System.out.println("(0) Curr best is: " + func.evaluate(currBest));
+        double currBestScore = func.evaluate(currBest);
+        //System.out.println("(0) Curr best is: " + func.evaluate(currBest));
         for (int i = 1; i < neighbors.size(); i++) {
             Particle comparison = neighbors.get(i);
-            System.out.println("(" + i + ") Comparison is:" + func.evaluate(comparison));
-            if (func.evaluate(comparison) < func.evaluate(currBest)) {
-                currBest = comparison;
-                System.out.println("changed!");
+            double score = func.evaluate(comparison);
+           //System.out.println("(" + i + ") Comparison is:" + score + " vs " + currBestScore);
+            //System.out.println(score < currBestScore);
+            if (score < currBestScore) {
+                currBest = comparison.copyParticle();
+                currBestScore = score;
+                //System.out.println("changed!");
             }
         }
         if(this.nbest == null || func.evaluate(currBest) < func.evaluate(this.nbest)) {
