@@ -28,6 +28,12 @@ public class Swarm {
     private List<Neighborhood> neighborhoods;
 
 
+    private final double NEIGHBORHOOD_CHANGE_PROB = 0.2;
+
+    final int NEIGHBORHOOD_SIZE = 5;
+
+
+
     /*  
      *   Constructor which creates a Swarm with numParticles number of particles. 
      *
@@ -210,6 +216,43 @@ public class Swarm {
             randParticle.generateRandomVelocity();
             particleList.add(randParticle);
         }
+    }
+
+    public void randomizeNeighborhoods() {
+        Random gen = new Random();
+        for(int i = 0; i < this.particleList.size(); i++) {
+            double probabiltyPicker = gen.nextDouble();
+            if(probabiltyPicker < NEIGHBORHOOD_CHANGE_PROB) {
+                Neighborhood newNeighborhood = this.pickRandomNeighborhood(this.particleList.get(i), NEIGHBORHOOD_SIZE);
+                Neighborhood oldNeighborhood = this.particleList.get(i).getNeighborhood();
+                this.neighborhoods.remove(oldNeighborhood);
+                this.particleList.get(i).setNeighborhood(newNeighborhood);
+                neighborhoods.add(newNeighborhood);
+            }
+        }
+    }
+
+    public Neighborhood pickRandomNeighborhood(Particle p, int k) {
+        Random rand = new Random();
+        List<Particle> neighborhoodList = new ArrayList<Particle>();
+        Set<Integer> numSet = new HashSet<Integer>();
+
+            neighborhoodList.add(p);
+            numSet.clear();
+
+            for (int j = 0; j < k; j++) {
+                int randNum = rand.nextInt(this.particleList.size());
+
+                while (numSet.contains(randNum)) {
+                    randNum = rand.nextInt(this.particleList.size());
+                }
+
+                numSet.add(randNum);
+                neighborhoodList.add(this.particleList.get(randNum));
+            }
+
+        Neighborhood newNeighborhood = new Neighborhood(neighborhoodList);
+        return newNeighborhood;
     }
 
 

@@ -155,9 +155,6 @@ public class PSO {
                 bestScore = iterBestScore;
             }
 
-            //System.out.println( (i + 1) + " BEST at this point is: " + bestScore);
-
-
             if((i + 1) % 1000 == 0) {
                 optResults.add(bestScore);
             }
@@ -167,7 +164,7 @@ public class PSO {
 
     public static void main(String[] args) {
 
-        PSO pso = new PSO(30, "rok", 30, 10000, "vn");
+        PSO pso = new PSO(30, "rok", 16, 10000, "ra");
         List<Double> opt = pso.optimize();
         for(int i = 0; i < opt.size(); i++) {
             System.out.println(opt.get(i));
