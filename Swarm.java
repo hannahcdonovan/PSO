@@ -110,7 +110,7 @@ public class Swarm {
 
                 Neighborhood newNeighborhood = new Neighborhood(neighborhoodList);
                 // System.out.println("Current one is " + neumannArray[i][j]);
-                System.out.println(neighborhoodList);
+                //System.out.println(neighborhoodList);
                 neumannArray[i][j].setNeighborhood(newNeighborhood);
                 neighborhoods.add(newNeighborhood);
             }

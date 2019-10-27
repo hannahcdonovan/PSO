@@ -105,7 +105,7 @@ public class Function {
         String function = this.funcName;
         double result = 0;
 
-        if (function.equals("rock")) {
+        if (function.equals("rok")) {
             result = this.evalRosenbrock(particle);
         } else if (function.equals("ack")) {
             result = this.evalAckley(particle);
