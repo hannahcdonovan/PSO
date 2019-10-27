@@ -2,6 +2,7 @@ import java.lang.Math;
 import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Particle {
 
@@ -21,25 +22,29 @@ public class Particle {
 
     private Function func;
 
+    private double currentScore = 1000;
+
     public Particle(int dimensions, Function func) {
 
         this.dimensions = dimensions;
         this.position = new double[dimensions];
         this.velocity = new double[dimensions];
-        this.personalBest = new double[dimensions];
+        this.personalBestPos = new double[dimensions];
+        this.personalBestScore = 100000;
         List<Particle> neighborhoodList = new ArrayList<Particle>();
         this.neighborhood = new Neighborhood(neighborhoodList);
         this.func = func;
 
     }
 
-    public Particle(int dimensions, Function func, double[] position, double[] velocity, double[] personalBest,
-                     Neighborhood neighborhood) {
+    public Particle(int dimensions, Function func, double[] position, double[] velocity, double[] personalBestPos,
+                     double personalBestScore, Neighborhood neighborhood) {
 
         this.dimensions = dimensions;
         this.position = position;
         this.velocity = velocity;
-        this.personalBest = personalBest;
+        this.personalBestScore = personalBestScore;
+        this.personalBestPos = personalBestPos;
         this.neighborhood = neighborhood;
         this.func = func;
 
@@ -47,8 +52,8 @@ public class Particle {
 
     public Particle copyParticle() {
 
-        Particle newParticle = new Particle(this.dimensions, this.func, this.position, this.velocity, this.personalBest, 
-                                             this.neighborhood);
+        Particle newParticle = new Particle(this.dimensions, this.func, this.position, this.velocity, this.personalBestPos, 
+                                             this.personalBestScore, this.neighborhood);
         return newParticle;
     }
 
@@ -56,7 +61,7 @@ public class Particle {
 
     public void setNeighborhood(Neighborhood newNeighborhood) {
         this.neighborhood = newNeighborhood;
-        this.neighborhood.setNeighborhoodBest(newNeighborhood.getNeighborhoodList().get(0));
+        //this.neighborhood.setNeighborhoodBest(newNeighborhood.getNeighborhoodList().get(0));
     }
 
     public void generateRandomPosition() {
@@ -97,7 +102,7 @@ public class Particle {
 
         double[] newVelo = new double[this.dimensions];
 
-        for(i = 0; i < this.dimensions; i++) {
+        for(int i = 0; i < this.dimensions; i++) {
             double part1 = constriction * (this.velocity[i] + gen.nextDouble()*phi1);
             double part2 = (this.personalBestPos[i] - this.position[i]) + (gen.nextDouble()*phi2);
             double part3 = (this.neighborhood.getNeighborhoodBest().personalBestPos()[i] - this.position[i]);
@@ -108,9 +113,12 @@ public class Particle {
         this.velocity = newVelo;
     }
 
-    public void generateNewPosition() {
-        this.generateNewVelocity();
-        newPos = this.velocity + this.position;
+    public void generateNewPositionAndVelocity(double constriction, double phi1, double phi2) {
+        this.generateNewVelocity(constriction, phi1, phi2);
+        //newPos = this.velocity + this.position;
+
+        double[] newPos = new double[this.velocity.length];
+        Arrays.setAll(newPos, i -> this.velocity[i] + this.position[i]);
         this.position = newPos;
     }
 
@@ -153,19 +161,26 @@ public class Particle {
         return this.personalBestScore;
     }
 
+    public void setCurrentScore(double score) {
+        this.currentScore = score;
+    }
+
 
     public String toString() {
         String position = "";
         String velocity = "";
 
-        for (int i = 0; i < this.dimensions; i++) {
-            position += this.position[i] + " ";
-            velocity += this.velocity[i] + " ";
-        }
+        // for (int i = 0; i < this.dimensions; i++) {
+        //     position += this.position[i] + " ";
+        //     velocity += this.velocity[i] + " ";
+        // }
 
-        String answer = position;
+        String score = Double.toString(this.func.evaluate(this));
+
+
+        //String answer = position;
         // "\n--------------------------------------------------------------";
-        return answer;
+        return score;
     }
 
 }

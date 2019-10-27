@@ -114,6 +114,7 @@ public class Function {
         } else {
             System.out.println("Oops! Something went wrong!");
         }
+        particle.setCurrentScore(result);
         return result;
     }
 

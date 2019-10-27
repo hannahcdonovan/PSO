@@ -16,22 +16,25 @@ public class Neighborhood {
     }
 
     public void setNeighborhoodBest(Particle currBest) {
-        nbest = currBest.copyParticle();
+        this.nbest = currBest.copyParticle();
+        this.nbest.getFunc().evaluate(nbest);
+
     }
 
     public void updateBest() {
 
         Particle currBest = neighbors.get(0);
         Function func = neighbors.get(0).getFunc();
-        System.out.println("(1) Curr best is: " + func.evaluate(currBest));
+        System.out.println("(0) Curr best is: " + func.evaluate(currBest));
         for (int i = 1; i < neighbors.size(); i++) {
             Particle comparison = neighbors.get(i);
-            System.out.println("Comparison is: " + func.evaluate(comparison));
+            System.out.println("(" + i + ") Comparison is:" + func.evaluate(comparison));
             if (func.evaluate(comparison) < func.evaluate(currBest)) {
                 currBest = comparison;
+                System.out.println("changed!");
             }
         }
-        if(func.evaluate(currBest) < func.evaluate(this.nbest)) {
+        if(this.nbest == null || func.evaluate(currBest) < func.evaluate(this.nbest)) {
         	this.setNeighborhoodBest(currBest);
         }
     }

@@ -21,6 +21,7 @@ public class Swarm {
         neighborhoods = new ArrayList<Neighborhood>();
     }
 
+
     public void makeRingNeighborhood() {
 
         if (numParticles > 2) {
@@ -163,7 +164,11 @@ public class Swarm {
     }
 
     public List<Neighborhood> getNeighborhoods() {
-        return neighborhoods;
+        return this.neighborhoods;
+    }
+
+    public List<Particle> getParticles() {
+        return this.particleList;
     }
 
     public void updateNeighborhoodBestList() {
@@ -194,7 +199,7 @@ public class Swarm {
         swarm.updateNeighborhoodBestList();
 
         for (Neighborhood n : swarm.getNeighborhoods()) {
-            System.out.println(n.printNeighborhoodBestVal());
+            //System.out.println(n.printNeighborhoodBestVal());
         }
 
     }
