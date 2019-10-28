@@ -139,6 +139,10 @@ public class PSO {
 
         for(int i = 0; i < this.iterations; i++) {
 
+            if(this.neighborhoodType.equals("ra")) {
+                this.swarm.randomizeNeighborhoods();
+            }
+
             double iterBestScore = Double.POSITIVE_INFINITY;
             for(Neighborhood n: this.swarm.getNeighborhoods()) {
                 n.updateBest();
